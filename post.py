@@ -1,7 +1,5 @@
 import requests
 
-
-
 # Create
 def create():
     fn = input("fn: ")
