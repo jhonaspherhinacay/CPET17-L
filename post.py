@@ -50,7 +50,7 @@ def delete():
 
 
 def user_choice():
-    choice = input("Type number:\n(1) Create\n(2)Delete\n(3)Update\n(4)Read:")
+    choice = input("Type number:\n(1) Create\n(2)Delete\n(3)Update\n(4)Read:\n")
     if choice == '1':
         create()
     if choice == '2':
