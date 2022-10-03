@@ -20,7 +20,7 @@ const db_table = 'reg';
 // throw error if connection failed
 connection.connect(function(err) {
     if (err) throw err;
-    console.log("Connected to Database!");
+    console.log("Connected!");
 });
 
 // parse application/x-www-form-urlencoded
@@ -41,11 +41,10 @@ app.post('/create', (req, res) => {
         ],
         function() {
             try {
-                app.get('/show', (req, res) => {
-                    res.send("${fn} ${ln}");
-                })
+                res.json({ data: [fn, ln] });
             } catch (err) {
-                res.send(Error, "${err}");
+                res.send(Error, '${ err }');
+
             }
         }
     );
@@ -73,9 +72,9 @@ app.post("/update", (req, res) => {
         ],
         function() {
             try {
-                res.json({ data: [fn, ln, id] });
+                res.json({ change: [fn, ln, id] });
             } catch (err) {
-                res.send(Error, $ { err });
+                res.send(Error, '${ err }');
             }
         }
     );
@@ -84,11 +83,18 @@ app.post("/update", (req, res) => {
 // delete
 app.post("/delete", (req, res) => {
     var id = req.body.id;
-    connection.query(`DELETE FROM $ { db_table } WHERE id = ? ;`, [id, ],
-        function(err, result) {
-            if (err) throw err;
-            res.json(result);
-        });
+    connection.query(
+        `DELETE FROM ${db_table} WHERE id = ? ;`, [
+            id,
+        ],
+        function() {
+            try {
+                res.json({ deleted: [id] });
+            } catch (err) {
+                res.send(Error, '${ err }');
+            }
+        }
+    );
 });
 
 

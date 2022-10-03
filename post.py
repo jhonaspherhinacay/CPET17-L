@@ -9,18 +9,17 @@ def create():
     data = {'fn':fn, 'ln':ln}
 
     # The POST request to our node server
-    res = requests.post('http://127.0.0.1:3000/create', json=data)
-    
-    # Convert response data to json
-    returned_data = res.json() 
+    res = requests.post('http://127.0.0.1:3000/create',json=data)
+    returned_data = res.json()
     print(returned_data)
+    pick()
    
 def read():
     res = requests.post('http://127.0.0.1:3000/read')
     returned_data = res.json()
     for i in returned_data:
         print(i)
-    user_choice()
+    pick()
     
 def update():
     fn = input("fn: ")
@@ -34,7 +33,7 @@ def update():
     res = requests.post('http://127.0.0.1:3000/update',json=data)
     returned_data = res.json()
     print(returned_data)
-    user_choice()
+    pick()
 
 def delete():
     id = int(input("Id: "))
@@ -45,12 +44,13 @@ def delete():
     # The POST request to our node server
     res = requests.post('http://127.0.0.1:3000/delete',json=data)
     returned_data = res.json()
-    user_choice()
+    print(returned_data)
+    pick()
     
 
 
-def user_choice():
-    choice = input("Type number:\n(1) Create\n(2)Delete\n(3)Update\n(4)Read:\n")
+def pick():
+    choice = input("Pick process:\n(1)Create\n(2)Read\n(3)Update\n(4)Delete:\n")
     if choice == '1':
         create()
     if choice == '2':
@@ -59,6 +59,8 @@ def user_choice():
         update()
     if choice == '4':
         delete()
+    else:
+        pick()
 
 
-user_choice()
+pick()
