@@ -93,7 +93,6 @@ app.post("/delete", (req, res) => {
 
 
 // listen to port
-
 app.listen(port, () => {
     console.log(`console.log(Server is running on port ${port}`);
 });
