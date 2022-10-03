@@ -4,7 +4,7 @@ const mysql = require("mysql2");
 var bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
-const db_table = 'reg';
+
 
 // create the connection to database
 const connection = mysql.createConnection({
@@ -13,6 +13,9 @@ const connection = mysql.createConnection({
     password: "",
     database: "test", //change this into custom database name
 });
+
+// call database table
+const db_table = 'reg';
 
 // throw error if connection failed
 connection.connect(function(err) {
@@ -50,11 +53,11 @@ app.post('/create', (req, res) => {
 
 // read
 app.post("/read", (req, res) => {
-    connection.query(SELECT * FROM ${db_table};, function (err, result) {
-      if (err) throw err;
-      res.json(result);
+    connection.query(SELECT * FROM $ { db_table };, function(err, result) {
+        if (err) throw err;
+        res.json(result);
     });
-  });
+});
 
 //update
 app.post("/update", (req, res) => {
@@ -62,30 +65,32 @@ app.post("/update", (req, res) => {
     var ln = req.body.ln;
     var id = req.body.id;
 
-  connection.query(
-    UPDATE ${db_table} SET fn=?, ln=? WHERE id=?;,
-    [
-      fn,
-      ln,
-      id,
-    ],
-    function () {
-      try {
-        res.json({ data: [fn, ln, id] });
-      } catch (err) {
-        res.send(Error, ${err});
-      }
-    }
-  );
+    connection.query(
+        UPDATE $ { db_table }
+        SET fn = ? , ln = ? WHERE id = ? ;, [
+            fn,
+            ln,
+            id,
+        ],
+        function() {
+            try {
+                res.json({ data: [fn, ln, id] });
+            } catch (err) {
+                res.send(Error, $ { err });
+            }
+        }
+    );
 });
 
 // delete
 app.post("/delete", (req, res) => {
     var id = req.body.id;
-    connection.query(DELETE FROM ${db_table} WHERE id=?;, [id,], function (err, result) {
-      if (err) throw err;
-      res.json(result);
-    });
+    connection.query(DELETE FROM $ { db_table }
+        WHERE id = ? ;, [id, ],
+        function(err, result) {
+            if (err) throw err;
+            res.json(result);
+        });
 });
 
 
