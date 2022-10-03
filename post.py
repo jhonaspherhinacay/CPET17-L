@@ -19,17 +19,16 @@ def create():
    
 
 def delete():
-    id = int(input("id: "))
+    id = int(input("Id: "))
 
     # Data that we will send in post request.
-    data = {'id':id }
+    data = {'id':id}
 
     # The POST request to our node server
-    res = requests.post('http://127.0.0.1:3000/delete', json=data)
+    res = requests.post('http://127.0.0.1:3000/delete',json=data)
+    returned_data = res.json()
+    user_choice()
     
-    # Convert response data to json
-    returned_data = res.json() 
-    print(returned_data)
 
 
 def user_choice():
