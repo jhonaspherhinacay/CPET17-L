@@ -23,6 +23,20 @@ def read():
     for i in returned_data:
         print(i)
     user_choice()
+    
+def update():
+    fn = input("fn: ")
+    ln = input("ln: ")
+    id = int(input("Id: "))
+
+    # Data that we will send in post request.
+    data = {'fn':fn, 'ln':ln, 'id':id}
+
+    # The POST request to our node server
+    res = requests.post('http://127.0.0.1:3000/update',json=data)
+    returned_data = res.json()
+    print(returned_data)
+    user_choice()
 
 def delete():
     id = int(input("Id: "))
