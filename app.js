@@ -53,7 +53,7 @@ app.post('/create', (req, res) => {
 
 // read
 app.post("/read", (req, res) => {
-    connection.query(SELECT * FROM $ { db_table };, function(err, result) {
+    connection.query(`SELECT * FROM ${ db_table };`, function(err, result) {
         if (err) throw err;
         res.json(result);
     });
@@ -66,8 +66,7 @@ app.post("/update", (req, res) => {
     var id = req.body.id;
 
     connection.query(
-        UPDATE $ { db_table }
-        SET fn = ? , ln = ? WHERE id = ? ;, [
+        `UPDATE ${db_table} SET fn = ? , ln = ? WHERE id = ? ;`, [
             fn,
             ln,
             id,
@@ -85,8 +84,7 @@ app.post("/update", (req, res) => {
 // delete
 app.post("/delete", (req, res) => {
     var id = req.body.id;
-    connection.query(DELETE FROM $ { db_table }
-        WHERE id = ? ;, [id, ],
+    connection.query(`DELETE FROM $ { db_table } WHERE id = ? ;`, [id, ],
         function(err, result) {
             if (err) throw err;
             res.json(result);
