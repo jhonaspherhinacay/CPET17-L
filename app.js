@@ -48,25 +48,45 @@ app.post('/create', (req, res) => {
     );
 })
 
+// read
+app.post("/read", (req, res) => {
+    connection.query(SELECT * FROM ${db_table};, function (err, result) {
+      if (err) throw err;
+      res.json(result);
+    });
+  });
+
+//update
+app.post("/update", (req, res) => {
+    var fn = req.body.fn;
+    var ln = req.body.ln;
+    var id = req.body.id;
+
+  connection.query(
+    UPDATE ${db_table} SET fn=?, ln=? WHERE id=?;,
+    [
+      fn,
+      ln,
+      id,
+    ],
+    function () {
+      try {
+        res.json({ data: [fn, ln, id] });
+      } catch (err) {
+        res.send(Error, ${err});
+      }
+    }
+  );
+});
 
 // delete
-app.post('/delete', (req, res) => {
+app.post("/delete", (req, res) => {
     var id = req.body.id;
-    connection.query(
-        `DELETE FROM ${db_table} WHERE id = ?;`, [
-            id,
-        ],
-        function() {
-            try {
-                app.get('/show', (req, res) => {
-                    res.send("DELETED");
-                })
-            } catch (err) {
-                res.send(Error, "${err}");
-            }
-        }
-    );
-})
+    connection.query(DELETE FROM ${db_table} WHERE id=?;, [id,], function (err, result) {
+      if (err) throw err;
+      res.json(result);
+    });
+});
 
 
 // listen to port
