@@ -17,6 +17,12 @@ def create():
     returned_data = res.json() 
     print(returned_data)
    
+def read():
+    res = requests.post('http://127.0.0.1:3000/read')
+    returned_data = res.json()
+    for i in returned_data:
+        print(i)
+    user_choice()
 
 def delete():
     id = int(input("Id: "))
@@ -35,7 +41,11 @@ def user_choice():
     choice = input("Type number:\n(1) Create\n(2)Delete\n(3)Update\n(4)Read:")
     if choice == '1':
         create()
-    elif choice == '2':
+    if choice == '2':
+        read()
+    if choice == '3':
+        update()
+    if choice == '4':
         delete()
 
 
