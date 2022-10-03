@@ -50,23 +50,13 @@ app.post('/create', (req, res) => {
 
 
 // delete
-app.post('/delete', (req, res) => {
+app.post("/delete", (req, res) => {
     var id = req.body.id;
-    connection.query(
-        `DELETE FROM ${db_table} WHERE id = ?;`, [
-            id,
-        ],
-        function() {
-            try {
-                app.get('/show', (req, res) => {
-                    res.send("DELETED");
-                })
-            } catch (err) {
-                res.send(Error, "${err}");
-            }
-        }
-    );
-})
+    connection.query(DELETE FROM ${db_table} WHERE id=?;, [id,], function (err, result) {
+      if (err) throw err;
+      res.json(result);
+    });
+});
 
 
 // listen to port
