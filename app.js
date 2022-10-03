@@ -56,6 +56,28 @@ app.post("/read", (req, res) => {
     });
   });
 
+//update
+app.post("/update", (req, res) => {
+    var fn = req.body.fn;
+    var ln = req.body.ln;
+    var id = req.body.id;
+
+  connection.query(
+    UPDATE ${db_table} SET fn=?, ln=? WHERE id=?;,
+    [
+      fn,
+      ln,
+      id,
+    ],
+    function () {
+      try {
+        res.json({ data: [fn, ln, id] });
+      } catch (err) {
+        res.send(Error, ${err});
+      }
+    }
+  );
+});
 
 // delete
 app.post("/delete", (req, res) => {
