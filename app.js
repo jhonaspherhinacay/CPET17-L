@@ -48,6 +48,14 @@ app.post('/create', (req, res) => {
     );
 })
 
+// read
+app.post("/read", (req, res) => {
+    connection.query(SELECT * FROM ${db_table};, function (err, result) {
+      if (err) throw err;
+      res.json(result);
+    });
+  });
+
 
 // delete
 app.post("/delete", (req, res) => {
