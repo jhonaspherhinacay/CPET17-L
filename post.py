@@ -50,7 +50,7 @@ def delete():
 
 
 def pick():
-    choice = input("Pick process:\n(1)Create\n(2)Read\n(3)Update\n(4)Delete:\n")
+    choice = input("Pick process:\n(1)Create\n(2)Read\n(3)Update\n(4)Delete:\n(5)Exit\n")
     if choice == '1':
         create()
     if choice == '2':
@@ -59,6 +59,8 @@ def pick():
         update()
     if choice == '4':
         delete()
+    if choice == '5':
+        exit()
     else:
         pick()
 

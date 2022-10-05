@@ -23,6 +23,11 @@ connection.connect(function(err) {
     console.log("Connected!");
 });
 
+// listen to port
+app.listen(port, () => {
+    console.log(`console.log(Server is running on port ${port}`);
+});
+
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -44,7 +49,6 @@ app.post('/create', (req, res) => {
                 res.json({ data: [fn, ln] });
             } catch (err) {
                 res.send(Error, '${ err }');
-
             }
         }
     );
@@ -55,6 +59,7 @@ app.post("/read", (req, res) => {
     connection.query(`SELECT * FROM ${ db_table };`, function(err, result) {
         if (err) throw err;
         res.json(result);
+
     });
 });
 
@@ -95,10 +100,4 @@ app.post("/delete", (req, res) => {
             }
         }
     );
-});
-
-
-// listen to port
-app.listen(port, () => {
-    console.log(`console.log(Server is running on port ${port}`);
 });
