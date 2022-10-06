@@ -1,5 +1,3 @@
-
-
 # importing OpenCV, time and Pandas library
 import cv2, time, pandas
 # importing datetime class from datetime library
@@ -96,32 +94,33 @@ while True:
     key = cv2.waitKey(1)
     
     if motion == 1:
-        time.append(datetime.now())
+        now = datetime.now()
+        # time.append(now.strftime("%Y-%m-%d %H:%M:%S"))
+        date_time_str = now.strftime("%Y-%m-%d %H:%M:%S")
+
+        ########## NODEJS CONNECTION
+        var_time = str(date_time_str)
+        # var_time = str(time)
+        # Data that we will send in post request.
+        data = {'var_time':var_time}
+
+        # The POST request to our node server
+        res = requests.post('http://127.0.0.1:3000/addtime',json=data)
+        returned_data = res.json()
+        print(returned_data)
 
     # if q entered whole process will stop   
     if key == ord('q'):
         break
 
-    ########## NODEJS CONNECTION
-
-    var_time = str(time)
-    # Data that we will send in post request.
-    data = {'var_time':var_time}
-
-    # The POST request to our node server
-    res = requests.post('http://127.0.0.1:3000/read',json=data)
-    returned_data = res.json()
-    print(returned_data)
-
     
-
-
-# Appending time of motion in DataFrame
-for i in range(0, len(time), 2):
-    df = df.append({"Start":time[i], "End":time[i + 1]}, ignore_index = True)
     
-# Creating a CSV file in which time of movements will be saved
-df.to_csv("Time_of_movements.csv")
+# # Appending time of motion in DataFrame
+# for i in range(0, len(time), 2):
+#     df = df.append({"Start":time[i], "End":time[i + 1]}, ignore_index = True)
+    
+# # Creating a CSV file inq which time of movements will be saved
+# df.to_csv("Time_of_movements.csv")
 video.release()
 
 # Destroying all the windows
