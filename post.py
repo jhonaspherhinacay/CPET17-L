@@ -37,7 +37,6 @@ def update():
 
 def delete():
     id = int(input("Id: "))
-
     # Data that we will send in post request.
     data = {'id':id}
 
