@@ -1,34 +1,4 @@
-# # import the opencv library
-# import cv2
-  
-  
-# # define a video capture object
-# vid = cv2.VideoCapture(0)
-  
-# while(True):
-      
-#     # Capture the video frame
-#     # by frame
-#     ret, frame = vid.read()
-  
-#     # Display the resulting frame
-#     cv2.imshow('frame', frame)
-      
-#     # the 'q' button is set as the
-#     # quitting button you may use any
-#     # desired button of your choice
-#     if cv2.waitKey(1) & 0xFF == ord('q'):
-#         break
-  
-# # After the loop release the cap object
-# vid.release()
-# # Destroy all the windows
-# cv2.destroyAllWindows()
 
-
-
-# Python program to implement
-# Webcam Motion Detector
 
 # importing OpenCV, time and Pandas library
 import cv2, time, pandas
@@ -128,12 +98,27 @@ while True:
     cv2.imshow("Color Frame", frame)
 
     key = cv2.waitKey(1)
-    # if q entered whole process will stop
+    
+    if motion == 1:
+        time.append(datetime.now())
+
+    # if q entered whole process will stop   
     if key == ord('q'):
-        # if something is movingthen it append the end time of movement
-        if motion == 1:
-            time.append(datetime.now())
         break
+
+    ########## NODEJS CONNECTION
+
+    var_time = str(time)
+    # Data that we will send in post request.
+    data = {'var_time':var_time}
+
+    # The POST request to our node server
+    res = requests.post('http://127.0.0.1:3000/read',json=data)
+    returned_data = res.json()
+    print(returned_data)
+
+    
+
 
 # Appending time of motion in DataFrame
 for i in range(0, len(time), 2):
@@ -145,19 +130,3 @@ video.release()
 
 # Destroying all the windows
 cv2.destroyAllWindows()
-
-
-########## NODEJS CONNECTION
-
-# Data that we will send in post request.
-data = {'df':df}
-data1 = (str(data))
-print(data1)
-
-# The POST request to our node server
-res = requests.post('http://127.0.0.1:3000/read',json=data2)
-returned_data = res.json()
-print(returned_data)
-
-
-

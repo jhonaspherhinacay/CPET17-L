@@ -27,15 +27,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 
-app.get("/", (req, res) => {
-    res.send("Hello 4B!");
-    console.log("Hello 4B!");
-});
-
-app.get("/read", (req, res) => {
-    console.log("Hello!");
-    var df = req.body.df;
-    res.send(df);
-    console.log(df);
-
+// insert time when motion is detected using opencv
+app.post("/read", (req, res) => {
+    var var_time = req.body.var_time;
+    res.json(var_time);
 });
