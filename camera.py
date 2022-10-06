@@ -7,9 +7,6 @@ from datetime import datetime
 
 import requests
 
-import json
-
-
 # Assigning our static_back to None
 static_back = None
 
@@ -18,7 +15,6 @@ motion_list = [ None, None ]
 
 # Time of movement
 time = []
-print(time)
 
 # Initializing DataFrame, one column is start
 # time and other column is end time
