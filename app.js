@@ -25,7 +25,7 @@ connection.connect(function(err) {
 
 // listen to port
 app.listen(port, () => {
-    console.log(`console.log(Server is running on port ${port}`);
+    console.log(`Server is running on port http://127.0.0.1:${port}`);
 });
 
 // parse application/x-www-form-urlencoded
