@@ -71,7 +71,20 @@ while True:
 
     # Appending Start time of motion
     if motion_list[-1] == 1 and motion_list[-2] == 0:
-        time.append(datetime.now())
+        # time.append(datetime.now())
+        now = datetime.now()
+        # date_time_str = now.strftime("%Y-%m-%d %H:%M:%S")
+
+        # ########## NODEJS CONNECTION
+        # var_time = str(date_time_str)
+        # # var_time = str(time)
+        # # Data that we will send in post request.
+        # data = {'var_time':var_time}
+
+        # # The POST request to our node server
+        # res = requests.post('http://127.0.0.1:3000/addtime',json=data)
+        # returned_data = res.json()
+        # print(returned_data)
 
     # Appending End time of motion
     if motion_list[-1] == 0 and motion_list[-2] == 1:
