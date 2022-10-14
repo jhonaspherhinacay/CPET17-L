@@ -20,6 +20,12 @@ app.listen(port, () => {
     console.log(`Server is running on port http://127.0.0.1:${port}`);
 });
 
+// Connection Handling Error
+connection.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected!");
+});
+
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 

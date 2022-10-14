@@ -91,10 +91,20 @@ while True:
     key = cv2.waitKey(1)
 
     if motion == True:
-        name = datetime.now().strftime("%Y-%m-%d_%H-%M-%S.avi")
-        out = cv2.VideoWriter(name, fourcc, 20.0, (640,480))
+        var_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        filename = var_time + '.avi'
+        out = cv2.VideoWriter(filename, fourcc, 20.0, (640,480))
         out.write(frame)
-   
+
+        ########## NODEJS CONNECTION
+        # Data that we will send in post request.
+        data = {'var_time':var_time}
+
+        # The POST request to our node server
+        res = requests.post('http://127.0.0.1:3000/addtime',json=data, files=out)
+        returned_data = res.json()
+        print(returned_data)
+
 
     # if q entered whole process will stop   
     if key == ord('q'):
