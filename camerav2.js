@@ -36,6 +36,19 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
+/* POST commands */
+
+app.post('/upload', upload.array(filename), function (req, res, next) {
+
+console.log("I AM HERE");
+
+})
+
+
+
+
+// paki-comment ng nasa baba
+
 
 // insert time when motion is detected using opencv
 app.post("/upload", (req, res) => {
