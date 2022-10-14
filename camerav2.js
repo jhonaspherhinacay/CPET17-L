@@ -38,13 +38,13 @@ app.use(bodyParser.json())
 
 
 // insert time when motion is detected using opencv
-app.post("/addtime", (req, res) => {
-    var var_time = req.body.var_time;
+app.post("/upload", (req, res) => {
+    var filename = req.files.filename;
     connection.query(
-        `INSERT INTO ${db_table} (datetime) VALUES (?);`, [var_time, ],
+        `INSERT INTO ${db_table} (filename) VALUES (?);`, [filename, ],
         function() {
             try {
-                res.json({ data: [var_time] });
+                res.json({ data: [filename] });
             } catch (err) {
                 res.send(Error, '${ err }');
             }

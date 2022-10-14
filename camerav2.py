@@ -98,12 +98,11 @@ while True:
 
         ########## NODEJS CONNECTION
         # Data that we will send in post request.
-        data = {'var_time':var_time}
-
-        # The POST request to our node server
-        res = requests.post('http://127.0.0.1:3000/addtime',json=data, files=out)
-        returned_data = res.json()
-        print(returned_data)
+        with open(filename, 'rb'):
+            # The POST request to our node server
+            res = requests.post('http://127.0.0.1:3000/upload', files={'filename' : filename})
+            returned_data = res.json()
+            print(returned_data)
 
 
     # if q entered whole process will stop   
