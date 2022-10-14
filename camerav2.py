@@ -21,6 +21,10 @@ df = pandas.DataFrame(columns = ["Start", "End"])
 # Capturing video
 video = cv2.VideoCapture(0)
 
+
+fourcc = cv2.VideoWriter_fourcc(*'XVID')
+
+
 # Infinite while loop to treat stack of image as video
 while True:
     # Reading frame(image) from video
@@ -69,13 +73,6 @@ while True:
 
     motion_list = motion_list[-2:]
 
-    # Appending Start time of motion
-    if motion_list[-1] == 1 and motion_list[-2] == 0:
-        time.append(datetime.now())
-
-    # Appending End time of motion
-    if motion_list[-1] == 0 and motion_list[-2] == 1:
-        time.append(datetime.now())
 
     # Displaying image in gray_scale
     cv2.imshow("Gray Frame", gray)
@@ -92,26 +89,12 @@ while True:
     cv2.imshow("Color Frame", frame)
 
     key = cv2.waitKey(1)
-    
-    if motion == 1:
-        now = datetime.now()
-        # time.append(now.strftime("%Y-%m-%d %H:%M:%S"))
-        date_time_str = now.strftime("%Y-%m-%d %H:%M:%S")
 
-        # # Appending time of motion in DataFrame
-        # for i in range(0, len(time), 2):
-        #     df = df.append({"Start":time[i], "End":time[i + 1]}, ignore_index = True)
-
-        ########## NODEJS CONNECTION
-        var_time = str(date_time_str)
-        # var_time = str(time)
-        # Data that we will send in post request.
-        data = {'var_time':var_time}
-
-        # The POST request to our node server
-        res = requests.post('http://127.0.0.1:3000/addtime',json=data)
-        returned_data = res.json()
-        print(returned_data)
+    if motion == True:
+        name = datetime.now().strftime("%Y-%m-%d_%H-%M-%S.avi")
+        out = cv2.VideoWriter(name, fourcc, 20.0, (640,480))
+        out.write(frame)
+   
 
     # if q entered whole process will stop   
     if key == ord('q'):
@@ -119,10 +102,6 @@ while True:
 
     
     
-
-    
-# # Creating a CSV file inq which time of movements will be saved
-# df.to_csv("Time_of_movements.csv")
 video.release()
 
 # Destroying all the windows
