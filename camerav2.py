@@ -111,7 +111,6 @@ while True:
         break
 
     
-    
 video.release()
 
 # Destroying all the windows
