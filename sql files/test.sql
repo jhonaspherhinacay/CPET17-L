@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 11, 2022 at 04:53 AM
+-- Generation Time: Oct 14, 2022 at 10:23 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.27
 
@@ -24,6 +24,18 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `camerav2`
+--
+
+CREATE TABLE `camerav2` (
+  `id` int(11) NOT NULL,
+  `datetime` datetime(6) NOT NULL,
+  `filename` blob NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `detect_time`
 --
 
@@ -31,13 +43,6 @@ CREATE TABLE `detect_time` (
   `id` int(11) NOT NULL,
   `time` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `detect_time`
---
-
-INSERT INTO `detect_time` (`id`, `time`) VALUES
-(135, '2022-10-11 10:35:03');
 
 -- --------------------------------------------------------
 
@@ -112,7 +117,8 @@ INSERT INTO `test` (`id`, `name`) VALUES
 -- Indexes for table `detect_time`
 --
 ALTER TABLE `detect_time`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `time` (`time`);
 
 --
 -- Indexes for table `reg`
@@ -140,7 +146,7 @@ ALTER TABLE `test`
 -- AUTO_INCREMENT for table `detect_time`
 --
 ALTER TABLE `detect_time`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=149;
 
 --
 -- AUTO_INCREMENT for table `reg`
