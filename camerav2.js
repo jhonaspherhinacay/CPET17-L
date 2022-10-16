@@ -3,10 +3,9 @@ const express = require("express");
 const mysql = require("mysql2");
 var bodyParser = require('body-parser');
 const app = express();
+const fs = require('fs');
 const port = 3000;
-var fileUpload = require('express-fileupload');
 
-app.use(fileUpload());
 
 // create the connection to database
 const connection = mysql.createConnection({
@@ -36,31 +35,29 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-/* POST commands */
-
-app.post('/upload', upload.array(filename), function (req, res, next) {
-
-console.log("I AM HERE");
-
-})
-
-
-
-
-// paki-comment ng nasa baba
-
 
 // insert time when motion is detected using opencv
-app.post("/upload", (req, res) => {
-    var filename = req.files.filename;
-    connection.query(
-        `INSERT INTO ${db_table} (filename) VALUES (?);`, [filename, ],
-        function() {
+
+
+app.post('/upload', (req, res) => {
+    var var_time = req.body.var_time;
+    var file_path = req.body.file_path;
+
+    // read file from the path from the json
+    var image = fs.readFileSync(file_path);
+    console.log(image);
+
+    // save datetime, imgfile, into the db
+    connection.query(`INSERT INTO ${db_table} (datetime, filename) VALUES (?, ?);`, [var_time, image],
+        (err, result) => {
             try {
-                res.json({ data: [filename] });
-            } catch (err) {
-                res.send(Error, '${ err }');
+                if (result.affectedRows > 0) {
+                    res.json({ data: "Success" });
+                } else {
+                    res.json({ message: "Something went wrong." });
+                }
+            } catch {
+                res.json({ message: err });
             }
-        }
-    );
-});
+        })
+})

@@ -99,7 +99,6 @@ while True:
 
         ########## NODEJS CONNECTION
         var_time = str(date_time_str)
-        # var_time = str(time)
         # Data that we will send in post request.
         data = {'var_time':var_time}
 

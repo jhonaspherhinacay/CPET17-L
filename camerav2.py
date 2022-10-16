@@ -4,7 +4,7 @@ import cv2, time, pandas
 from datetime import datetime
 
 import requests
-
+import os
 # Assigning our static_back to None
 static_back = None
 
@@ -20,9 +20,6 @@ df = pandas.DataFrame(columns = ["Start", "End"])
 
 # Capturing video
 video = cv2.VideoCapture(0)
-
-
-fourcc = cv2.VideoWriter_fourcc(*'XVID')
 
 
 # Infinite while loop to treat stack of image as video
@@ -92,18 +89,20 @@ while True:
 
     if motion == True:
         var_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        filename = var_time + '.avi'
-        out = cv2.VideoWriter(filename, fourcc, 20.0, (640,480))
-        out.write(frame)
+        filename = var_time + '.jpg'
+        
+        # Save the captured frame
+        cv2.imwrite(filename, frame)
+       
+        # Get the absolute path of saved image (frame)
+        file_path = os.path.abspath(filename)
 
-        ########## NODEJS CONNECTION
         # Data that we will send in post request.
-        with open(filename, 'rb'):
-            # The POST request to our node server
-            res = requests.post('http://127.0.0.1:3000/upload', files={'filename' : filename})
-            returned_data = res.json()
-            print(returned_data)
-
+        data = {"var_time": var_time, "file_path": file_path}
+        # The POST request to our node server
+        res = requests.post('http://localhost:3000/upload', json=data)
+        # Display the json response
+        print(res.json())
 
     # if q entered whole process will stop   
     if key == ord('q'):
