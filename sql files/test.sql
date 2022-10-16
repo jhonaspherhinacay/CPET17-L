@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 14, 2022 at 10:23 AM
+-- Generation Time: Oct 16, 2022 at 06:45 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.27
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `camerav2` (
   `id` int(11) NOT NULL,
   `datetime` datetime(6) NOT NULL,
-  `filename` blob NOT NULL
+  `filename` mediumblob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -114,6 +114,13 @@ INSERT INTO `test` (`id`, `name`) VALUES
 --
 
 --
+-- Indexes for table `camerav2`
+--
+ALTER TABLE `camerav2`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `datetime` (`datetime`);
+
+--
 -- Indexes for table `detect_time`
 --
 ALTER TABLE `detect_time`
@@ -141,6 +148,12 @@ ALTER TABLE `test`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `camerav2`
+--
+ALTER TABLE `camerav2`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 
 --
 -- AUTO_INCREMENT for table `detect_time`
