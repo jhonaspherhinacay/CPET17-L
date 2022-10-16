@@ -61,3 +61,28 @@ app.post('/upload', (req, res) => {
             }
         })
 })
+
+
+app.get("/display", (req, res) => {
+    console.log(req.query);
+
+    connection.query(
+        "SELECT * FROM `camerav2` ",
+        function(err, tables) {
+            console.log(tables);
+            // first check if there are results
+            try {
+                for (let i = 0; i < tables.length; i++) {
+                    var name = `${tables[i].id} + ${tables[i].datetime} + ${tables[i].filename.toString("base64")} \n `
+                    res.write(name);
+                }
+                res.end();
+
+            } catch (err) {
+                res.send(`Error: ${err}!`);
+            }
+
+        }
+    );
+
+});
