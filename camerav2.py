@@ -49,8 +49,8 @@ while True:
 
     # If change in between static background and
     # current frame is greater than 30 it will show white color(255)
-    thresh_frame = cv2.threshold(diff_frame, 30, 255, cv2.THRESH_BINARY)[1]
-    thresh_frame = cv2.dilate(thresh_frame, None, iterations = 2)
+    thresh_frame = cv2.threshold(diff_frame, 150, 255, cv2.THRESH_BINARY)[1]
+    thresh_frame = cv2.dilate(thresh_frame, None, iterations = 1)
 
     # Finding contour of moving object
     cnts,_ = cv2.findContours(thresh_frame.copy(),
@@ -87,7 +87,32 @@ while True:
 
     key = cv2.waitKey(1)
 
-    if motion == True:
+    ##### PART I #####
+    # if motion == True:
+    #     var_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    #     filename = var_time + '.jpg'
+        
+    #     # Save the captured frame
+    #     cv2.imwrite(filename, frame)
+       
+    #     # Get the absolute path of saved image (frame)
+    #     file_path = os.path.abspath(filename)
+
+    #     # Data that we will send in post request.
+    #     data = {"var_time": var_time, "file_path": file_path}
+    #     # The POST request to our node server
+    #     res = requests.post('http://localhost:3000/upload', json=data)
+    #     # Display the json response
+    #     # print(res.json())
+
+
+    ##### PART II #####
+    # Appending End time of motion
+    if motion_list[-1] == 0 and motion_list[-2] == 1:
+        time.append(datetime.now())
+
+    # Appending Start time of motion
+    if motion_list[-1] == 1 and motion_list[-2] == 0:
         var_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         filename = var_time + '.jpg'
         
@@ -102,7 +127,8 @@ while True:
         # The POST request to our node server
         res = requests.post('http://localhost:3000/upload', json=data)
         # Display the json response
-        print(res.json())
+        # print(res.json())
+
 
     # if q entered whole process will stop   
     if key == ord('q'):
